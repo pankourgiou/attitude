@@ -1,32 +1,57 @@
-import time
+def calcPi(limit):  # Generator function
+    """
+    Prints out the digits of PI
+    until it reaches the given limit
+    """
+
+    q, r, t, k, n, l = 1, 0, 1, 1, 3, 3
+
+    decimal = limit
+    counter = 0
+
+    while counter != decimal + 1:
+            if 4 * q + r - t < n * t:
+                    # yield digit
+                    yield n
+                    # insert period after first digit
+                    if counter == 0:
+                            yield '.'
+                    # end
+                    if decimal == counter:
+                            print('')
+                            break
+                    counter += 1
+                    nr = 10 * (r - n * t)
+                    n = ((10 * (3 * q + r)) // t) - 10 * n
+                    q *= 10
+                    r = nr
+            else:
+                    nr = (2 * q + r) * l
+                    nn = (q * (7 * k) + 2 + (r * l)) // (t * l)
+                    q *= k
+                    t *= l
+                    l += 2
+                    k += 1
+                    n = nn
+                    r = nr
 
 
-t1 = time.time()
+def main():  # Wrapper function
 
-x = "1+1=2"
-x1 = "π + 2112 -2112 +2*x - 2*x = π"
-x2 = "2*π + 3112 -1000 - 2*π = 2112"
-x3 = "2*t + 8 - 8 -t = t"
-x4 = "2112 +7 + 3,14 + 2 = 2124,14"
-x5 = "2124, 14 - 2124 - 0,14 = 0"
-x6 = "we did a full circle again it's a focusing and silence exercise"
-x7 = "social media are more mathematical structures than we think"
-x8 = "don't wonder for whom the bell tolls it's always for you that's another idea we don't really understand"
-x9 = "9 + 9 -1 -1 -1 -1 -14 = 0"
-x10 = "68 101 109 111 99 114 97 99 121 32 103 111 101 115 32 115 108 111 119 32 105 116 39 97 32 103 111 111 100 32 105 100 101 97 32 73 32 116 104 105 110 107 46 32"
+    # Calls CalcPi with the given limit
+    pi_digits = calcPi(int(input(
+        "Enter the number of decimals to calculate to: ")))
 
-print(bool(x))
-print(bool(x1))
-print(bool(x2))
-print(bool(x3))
-print(bool(x4))
-print(bool(x5))
-print(bool(x6))
-print(bool(x7))
-print(bool(x8))
-print(bool(x9))
-print(bool(x10))
+    i = 0
 
-t2 = time.time()
-t = t2 - t1
-print("Elapsed time is : ", t, " seconds")
+    # Prints the output of calcPi generator function
+    # Inserts a newline after every 40th number
+    for d in pi_digits:
+            print(d, end='')
+            i += 1
+            if i == 40:
+                print("")
+                i = 0
+
+if __name__ == '__main__':
+    main()
